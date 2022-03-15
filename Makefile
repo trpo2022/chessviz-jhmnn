@@ -1,10 +1,28 @@
-all: main
+.PHONY: all clean run
 
-main: main.c
-	gcc -Wall -Werror -o main main.c
+CFLAGS = -Wall -Werror
+CPPFLAGS = -MMD
+OSC = obj/src/chessviz/
+OSL = obj/src/libchessviz/
+SC = src/chessviz/
+SL = src/libchessviz/
+ADDPATH = -Isrc
+
+all: bin/main
+
+bin/main: $(OSC)main.o $(OSC)board.o
+	$(CC) $(CFLAGS) $(ADDPATH) -o $@ $^
+
+$(OSC)main.o: $(SC)main.c
+	$(CC) -c $(CFLAGS) $(ADDPATH) $(CPPFLAGS) -o $@ $<
+
+$(OSC)board.o: $(SL)board.c
+	$(CC) -c $(CFLAGS) $(ADDPATH) $(CPPFLAGS) -o $@ $<
 
 clean:
-	rm main
+	rm -f $(OSC)*.o
 
 run:
-	./main
+	./bin/main
+
+-include main.d board.d
