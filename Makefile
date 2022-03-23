@@ -10,11 +10,14 @@ ADDPATH = -Isrc
 
 all: bin/main
 
-bin/main: $(OSC)main.o $(OSC)board.o
+bin/main: $(OSC)main.o $(OSL)libchessviz.a
 	$(CC) $(CFLAGS) $(ADDPATH) -o $@ $^
 
 $(OSC)main.o: $(SC)main.c
 	$(CC) -c $(CFLAGS) $(ADDPATH) $(CPPFLAGS) -o $@ $<
+
+$(OSL)libchessviz.a: $(OSC)board.o
+	ar rcs $@ $^
 
 $(OSC)board.o: $(SL)board.c
 	$(CC) -c $(CFLAGS) $(ADDPATH) $(CPPFLAGS) -o $@ $<

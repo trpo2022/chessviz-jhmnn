@@ -5,12 +5,13 @@
 #include <stdio.h>
 #include <ctype.h>
 
-static int ismoveletter(char symbol) {
+static int ismoveletter(char symbol)
+{
     int lettersNum = 8;
-    char lettersCells[] = "abcdefgh";
+    char letters[] = "abcdefgh";
 
     for (int k = 0; k < lettersNum; k++) {
-        if (symbol == lettersCells[k]) {
+        if (symbol == letters[k]) {
             return TRUE;
         }
     }
@@ -18,7 +19,22 @@ static int ismoveletter(char symbol) {
     return FALSE;
 }
 
-static int ispiecesletter(char symbol) {
+static int ismovedigit(char symbol)
+{
+    int numbersNum = 8;
+    char numbers[] = "12345678";
+
+    for (int k = 0; k < numbersNum; k++) {
+        if (symbol == numbers[k]) {
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+static int ispiecesletter(char symbol) 
+{
     int piecesNum = 5;
     char pieces[] = "RNBQK";
 
@@ -31,7 +47,8 @@ static int ispiecesletter(char symbol) {
     return FALSE;
 }
 
-static int check_end_of_input(char *string) {
+static int check_end_of_input(char *string) 
+{
     for (int i = 0; i < strlen(string); i++) {
         if (string[i] == '#') {
             return TRUE;
@@ -41,37 +58,24 @@ static int check_end_of_input(char *string) {
     return FALSE;
 }
 
-static int check_input_correctness(char *moves) {
+static int check_input_correctness(char *moves) 
+{
     int currentSymbolNum = 0;
-    if (ismoveletter(moves[currentSymbolNum])) {
-        currentSymbolNum++;
-        if (!isdigit(moves[currentSymbolNum])) return FALSE;
-        currentSymbolNum++;
-        if (moves[currentSymbolNum] != '-' && moves[currentSymbolNum] != 'x') return FALSE;
-        currentSymbolNum++;
-        if (!ismoveletter(moves[currentSymbolNum])) return FALSE;
-        currentSymbolNum++;
-        if (!isdigit(moves[currentSymbolNum])) return FALSE;
-        currentSymbolNum++;
-        if (strlen(moves) > currentSymbolNum && moves[currentSymbolNum] != '#' && moves[currentSymbolNum] != '+') return FALSE;
-        currentSymbolNum++;
-        if (strlen(moves) > currentSymbolNum) return FALSE;
-    } else if (ispiecesletter(moves[currentSymbolNum])) {
-        currentSymbolNum++;
-        if (!ismoveletter(moves[currentSymbolNum])) return FALSE;
-        currentSymbolNum++;
-        if (!isdigit(moves[currentSymbolNum])) return FALSE;
-        currentSymbolNum++;
-        if (moves[currentSymbolNum] != '-' && moves[currentSymbolNum] != 'x') return FALSE;
-        currentSymbolNum++;
-        if (!ismoveletter(moves[currentSymbolNum])) return FALSE;
-        currentSymbolNum++;
-        if (!isdigit(moves[currentSymbolNum])) return FALSE;
-        currentSymbolNum++;
-        if (strlen(moves) > currentSymbolNum && moves[currentSymbolNum] != '#' && moves[currentSymbolNum] != '+') return FALSE;
-        currentSymbolNum++;
-        if (strlen(moves) > currentSymbolNum) return FALSE;
-    } else return FALSE;
+
+    if (ispiecesletter(moves[currentSymbolNum])) currentSymbolNum++;
+    if (!ismoveletter(moves[currentSymbolNum])) return FALSE;
+    currentSymbolNum++;
+    if (!ismovedigit(moves[currentSymbolNum])) return FALSE;
+    currentSymbolNum++;
+    if (moves[currentSymbolNum] != '-' && moves[currentSymbolNum] != 'x') return FALSE;
+    currentSymbolNum++;
+    if (!ismoveletter(moves[currentSymbolNum])) return FALSE;
+    currentSymbolNum++;
+    if (!ismovedigit(moves[currentSymbolNum])) return FALSE;
+    currentSymbolNum++;
+    if (strlen(moves) > currentSymbolNum && moves[currentSymbolNum] != '#' && moves[currentSymbolNum] != '+') return FALSE;
+    currentSymbolNum++;
+    if (strlen(moves) > currentSymbolNum) return FALSE;
 
     return TRUE;
 }
@@ -83,8 +87,8 @@ ChessBoard *new_board()
     cboard->cells = malloc(CELLS_IN_ROW * (CELLS_IN_ROW + 1) * sizeof(char));
     if (cboard->cells == NULL) return NULL;
 
-    cboard->cells[0] = "rnbqkbnr";
-    cboard->cells[1] = "pppppppp";
+    cboard->cells[0] = "RNBQKBNR";
+    cboard->cells[1] = "PPPPPPPP";
     cboard->cells[2] = "        ";
     cboard->cells[3] = "        ";
     cboard->cells[4] = "        ";
@@ -108,6 +112,7 @@ MoveRec *read_move_term()
 
     while (1) {
         moveRec->numberOfMoves++;
+
         scanf("%s %s", moveNum, whiteMove);
         if (strtoul(moveNum, NULL, 10) != moveRec->numberOfMoves) return NULL;
         if (!check_input_correctness(whiteMove)) return NULL;
