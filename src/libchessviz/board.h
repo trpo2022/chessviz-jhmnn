@@ -21,8 +21,8 @@ typedef struct MoveRec {
     int numberOfMoves;
 } MoveRec;
 
-ChessBoard *new_board();
-MoveRec *read_move_term();
-void print_board(ChessBoard *cboard);
+ChessBoard* new_board();
+MoveRec* read_move_term();
+void print_board(ChessBoard* cboard);
 
 #endif
