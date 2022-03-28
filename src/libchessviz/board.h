@@ -13,15 +13,16 @@
 #define TRUE 1
 
 typedef struct ChessBoard {
-    char **cells;
+    char cells[CELLS_IN_ROW][CELLS_IN_ROW + 1];
 } ChessBoard;
 
-typedef struct MovesRec {
+typedef struct MoveRec {
     char moves[MAX_MOVES][MOVES_IN_ONE][MAX_MOVE_LENGTH];
     int numberOfMoves;
 } MoveRec;
 
 ChessBoard *new_board();
 MoveRec *read_move_term();
+void print_board(ChessBoard *cboard);
 
 #endif

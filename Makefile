@@ -1,6 +1,6 @@
 .PHONY: all clean run
 
-CFLAGS = -Wall -Werror
+CFLAGS = -Wall -Werror -g3
 CPPFLAGS = -MMD
 OSC = obj/src/chessviz/
 OSL = obj/src/libchessviz/
@@ -23,7 +23,7 @@ $(OSC)board.o: $(SL)board.c
 	$(CC) -c $(CFLAGS) $(ADDPATH) $(CPPFLAGS) -o $@ $<
 
 clean:
-	rm -f $(OSC)*.o
+	rm -f $(OSC)*.o $(OSC)*.d $(OSL)*.a
 
 run:
 	./bin/main
