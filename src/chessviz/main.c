@@ -22,7 +22,7 @@ int main()
     putchar('\n');
 
     if (!moves || !check_all_moves(*board, moves)) printf("Введены некорректные данные.\n");
-    else printf("OK\n");
+    else print_game(board, moves);
 
     free(board);
     free(moves);

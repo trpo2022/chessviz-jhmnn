@@ -82,3 +82,21 @@ void print_board(ChessBoard* board, int board_num)
     printf("  \e[1;37ma b c d e f g h\e[0m");
     printf("\n\n");
 }
+
+void print_game(ChessBoard* board, MoveRec *moves)
+{
+    printf("-------------------------------------------\n");
+
+    for (int i = 0; i < moves->numberOfMoves; i++) {
+        printf("\t      %d. %s %s\n\n", i + 1, moves->moves[i][0], moves->moves[i][1]);
+        
+        putchar('\n');
+
+        move(board, moves->moves[i][0]);
+        print_board(board, 0);
+        move(board, moves->moves[i][1]);
+        print_board(board, 1);
+        printf("\e[1A");
+        printf("-------------------------------------------\n");
+    }    
+}
