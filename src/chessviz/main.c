@@ -1,37 +1,31 @@
 #include "libchessviz/board.h"
+#include "libchessviz/board_read.h"
+#include "libchessviz/board_move.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+
 int main()
 {
-    ChessBoard* cboard = new_board();
-    if (cboard == NULL)
-        return 0;
+    ChessBoard* board = new_board();
+    if (!board) return 0;
 
-    printf("\n");
-    print_board(cboard);
-    printf("\n\n");
+    putchar('\n');
+    print_board(board, 0);
     printf("Введите ходы в следующем формате:\n");
-    printf("1. e2-e4 e7-e5\n2. Qh5xf7#\n\n");
+    printf("1. e2-e4 e7-e5\n2. Bf1-c4 Nb8-c6\n3. Qd1-h5 Ng8-f6\n4. Qh5xf7#\n\n");
 
-    MoveRec* moveRec = read_move_term();
-    if (moveRec == NULL) {
-        printf("Введены некорректные данные.\n");
-        return 0;
-    }
+    MoveRec* moves = read_move_term();
 
-    printf("\n");
-    for (int i = 0; i < moveRec->numberOfMoves; i++) {
-        printf("%d. %s %s\n",
-               i + 1,
-               moveRec->moves[i][WHITE_MOVE],
-               moveRec->moves[i][BLACK_MOVE]);
-    }
+    putchar('\n');
 
-    free(cboard);
-    free(moveRec);
+    if (!moves || !check_all_moves(*board, moves)) printf("Введены некорректные данные.\n");
+    else printf("OK\n");
+
+    free(board);
+    free(moves);
 
     return 0;
 }
