@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 ChessBoard* new_board()
 {
     ChessBoard* board = malloc(sizeof(ChessBoard));
-    if (!board) return NULL;
+    if (!board)
+        return NULL;
 
     strcpy(board->cells[7], "rnbqkbnr");
     strcpy(board->cells[6], "pppppppp");
@@ -83,13 +83,16 @@ void print_board(ChessBoard* board, int board_num)
     printf("\n\n");
 }
 
-void print_game(ChessBoard* board, MoveRec *moves)
+void print_game(ChessBoard* board, MoveRec* moves)
 {
     printf("-------------------------------------------\n");
 
     for (int i = 0; i < moves->numberOfMoves; i++) {
-        printf("\t      %d. %s %s\n\n", i + 1, moves->moves[i][0], moves->moves[i][1]);
-        
+        printf("\t      %d. %s %s\n\n",
+               i + 1,
+               moves->moves[i][0],
+               moves->moves[i][1]);
+
         putchar('\n');
 
         move(board, moves->moves[i][0]);
@@ -98,5 +101,5 @@ void print_game(ChessBoard* board, MoveRec *moves)
         print_board(board, 1);
         printf("\e[1A");
         printf("-------------------------------------------\n");
-    }    
+    }
 }

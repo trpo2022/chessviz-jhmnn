@@ -1,6 +1,5 @@
 #include "libchessviz/board.h"
 
-
 #ifndef BOARD_READ_H
 #define BOARD_READ_H
 

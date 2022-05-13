@@ -1,11 +1,10 @@
 #include "libchessviz/board_read.h"
 #include "libchessviz/board.h"
 
-#include <stdio.h>
 #include <ctype.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 
 static int ismoveletter(char symbol)
 {
@@ -94,16 +93,20 @@ static int check_input_correctness(char* moves)
 MoveRec* read_move_term()
 {
     MoveRec* moveRec = malloc(sizeof(MoveRec));
-    if (moveRec == NULL) return NULL;
+    if (moveRec == NULL)
+        return NULL;
 
     char* moveNum = malloc(5 * sizeof(char));
-    if (moveNum == NULL) return NULL;
+    if (moveNum == NULL)
+        return NULL;
 
     char* whiteMove = malloc(MAX_MOVE_LENGTH * sizeof(char));
-    if (whiteMove == NULL) return NULL;
+    if (whiteMove == NULL)
+        return NULL;
 
     char* blackMove = malloc(MAX_MOVE_LENGTH * sizeof(char));
-    if (blackMove == NULL) return NULL;
+    if (blackMove == NULL)
+        return NULL;
 
     moveRec->numberOfMoves = 0;
 
